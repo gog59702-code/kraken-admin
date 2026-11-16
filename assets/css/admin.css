@@ -1,0 +1,113 @@
+/* Kraken — panneau d'administration. Même langage visuel que l'app. */
+@font-face{font-family:"KrakenBrand";src:url("../font/krakenbrand_regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"KrakenBrand";src:url("../font/krakenbrand_medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:"KrakenBrand";src:url("../font/krakenbrand_bold.ttf") format("truetype");font-weight:700;font-display:swap}
+@font-face{font-family:"KrakenProduct";src:url("../font/krakenproduct_regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"KrakenProduct";src:url("../font/krakenproduct_medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:"KrakenProduct";src:url("../font/krakenproduct_semibold.ttf") format("truetype");font-weight:600;font-display:swap}
+@font-face{font-family:"KrakenProduct";src:url("../font/krakenproduct_bold.ttf") format("truetype");font-weight:700;font-display:swap}
+@font-face{font-family:"KrakenMono";src:url("../font/krakenmono_regular.ttf") format("truetype");font-weight:400;font-display:swap}
+
+:root{
+  --ink:#101114; --ink-2:#6b6b73; --ink-3:#9a9aa2;
+  --line:#ececef; --line-2:#dcdce1; --grey:#f2f2f4;
+  --purple:#7132F5; --green:#0a9d58; --red:#e5484d;
+  --sb:env(safe-area-inset-bottom,0px); --st:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  margin:0;background:#fff;color:var(--ink);overflow-x:hidden;
+  font-family:"KrakenProduct",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+input{font:inherit;color:inherit;background:none;border:0;outline:none;min-width:0}
+img{display:block}
+.shell{width:100%;max-width:600px;margin:0 auto;min-height:100dvh;padding-bottom:calc(96px + var(--sb))}
+
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;
+  padding:calc(18px + var(--st)) 20px 12px;background:#fff;border-bottom:1px solid transparent}
+.top.scrolled{border-color:var(--line)}
+.mark{width:42px;height:42px;border-radius:13px;background:#101114;display:grid;place-items:center;color:#fff;font-family:"KrakenBrand";font-size:19px;font-weight:700}
+.top-id{display:flex;flex-direction:column;line-height:1.15}
+.top-id b{font-family:"KrakenBrand";font-size:17px;font-weight:500;letter-spacing:-.2px}
+.top-id i{font-style:normal;font-size:12px;color:var(--ink-3)}
+.live{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-3);
+  background:var(--grey);border-radius:999px;padding:7px 11px}
+.live i{width:8px;height:8px;border-radius:50%;background:#c9c9cf}
+.live.on i{background:var(--green)}
+
+.page{padding:18px 20px 0}
+.h1{font-family:"KrakenBrand";font-size:22px;font-weight:500;letter-spacing:-.3px;margin:2px 0 4px}
+.sub{color:var(--ink-2);font-size:13.5px;margin:0 0 16px}
+
+.card{border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:14px}
+.card h3{margin:0 0 12px;font-size:15px;font-weight:600;letter-spacing:-.1px}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.field span{font-size:12.5px;color:var(--ink-2)}
+.field input{height:46px;border:1px solid var(--line-2);border-radius:12px;padding:0 12px;font-size:15px;background:#fff}
+.field input:focus{border-color:#0b0b0c}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.btn{height:52px;border-radius:26px;background:#0b0b0c;color:#fff;font-weight:600;font-size:15px;
+  display:grid;place-items:center;width:100%}
+.btn:active{opacity:.85}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line-2);height:48px;border-radius:14px}
+.btn.purple{background:var(--purple)}
+
+.coinrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.coinrow:last-child{border-bottom:0}
+.coin{width:30px;height:30px;border-radius:50%;flex:0 0 auto;object-fit:contain}
+.coin-sm{width:26px;height:26px}
+.coinrow .sym{width:48px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.coinrow input{width:100%;text-align:right;font-family:"KrakenMono";font-size:14.5px;
+  border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff}
+.coinrow .fee{flex:0 0 96px}
+.coinrow .fee input{font-size:13px}
+.chead{display:flex;gap:10px;align-items:center;margin-bottom:2px}
+.chead b{font-size:12px;color:var(--ink-3);font-weight:500}
+.chead .r{margin-left:auto;width:96px;text-align:right}
+.chead .b{margin-left:auto}
+
+.coingrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.pick{display:flex;flex-direction:column;align-items:center;gap:6px;padding:11px 4px;
+  border:1px solid var(--line);border-radius:14px;background:#fff}
+.pick .coin{width:30px;height:30px}
+.pick b{font-size:11.5px;font-weight:600}
+.pick.on{border-color:#0b0b0c;box-shadow:inset 0 0 0 1px #0b0b0c}
+
+.sw{display:flex;align-items:center;gap:11px;font-size:14px;color:var(--ink-2);margin:2px 0 14px}
+.sw input{width:22px;height:22px;flex:0 0 auto;accent-color:#0b0b0c}
+
+.addr{display:flex;gap:8px;align-items:center;background:var(--grey);border-radius:12px;padding:11px 12px;margin-bottom:12px}
+.addr code{font-family:"KrakenMono";font-size:11.5px;word-break:break-all;flex:1;line-height:1.35}
+.addr button{font-size:12px;font-weight:600;color:var(--purple);flex:0 0 auto}
+
+.jrow{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.jrow:last-child{border-bottom:0}
+.jico{width:36px;height:36px;border-radius:50%;background:#e8f7ee;color:#0b7d3f;display:grid;place-items:center;flex:0 0 auto}
+.jico svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transform:rotate(180deg)}
+.jmain{min-width:0;flex:1}
+.jtitle{font-size:14px;font-weight:600}
+.jtext{font-size:13px;color:var(--ink-2)}
+.jamt{font-size:13px;font-weight:600;color:#0b7d3f;margin-top:2px}
+.jaddr{font-family:"KrakenMono";font-size:11.5px;color:var(--ink-3);word-break:break-all;margin-top:3px}
+.jwhen{font-size:11.5px;color:#a2a2aa;margin-top:4px}
+.empty{color:var(--ink-2);font-size:14px;padding:8px 0}
+
+.tabs{position:fixed;bottom:0;left:0;right:0;z-index:40;background:#fff;border-top:1px solid var(--line);
+  padding:8px 8px calc(8px + var(--sb));display:grid;grid-template-columns:repeat(4,1fr);max-width:600px;margin:0 auto}
+.tab{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0;color:var(--ink-3);font-size:10.5px;font-weight:600}
+.tab svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tab.on{color:#0b0b0c}
+
+.toast{position:fixed;left:50%;bottom:calc(104px + var(--sb));z-index:80;transform:translate(-50%,12px);
+  opacity:0;pointer-events:none;background:#0b0b0c;color:#fff;border-radius:12px;padding:11px 18px;
+  font-size:14px;font-weight:500;max-width:88%;text-align:center;transition:.22s;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+.view{display:none}
+.view.on{display:block}
+
+@media (min-width:601px){ body{background:#f4f4f6} .shell{background:#fff;box-shadow:0 0 60px rgba(0,0,0,.08)} }
