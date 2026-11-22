@@ -38,7 +38,7 @@ img{display:block}
 .live i{width:8px;height:8px;border-radius:50%;background:#c9c9cf}
 .live.on i{background:var(--green)}
 
-.page{padding:18px 20px 0}
+.page{padding:18px 20px calc(122px + var(--sb))}
 .h1{font-family:"KrakenBrand";font-size:22px;font-weight:500;letter-spacing:-.3px;margin:2px 0 4px}
 .sub{color:var(--ink-2);font-size:13.5px;margin:0 0 16px}
 
@@ -97,9 +97,9 @@ img{display:block}
 .empty{color:var(--ink-2);font-size:14px;padding:8px 0}
 
 .tabs{position:fixed;bottom:0;left:0;right:0;z-index:40;background:#fff;border-top:1px solid var(--line);
-  padding:8px 8px calc(8px + var(--sb));display:grid;grid-template-columns:repeat(4,1fr);max-width:600px;margin:0 auto}
-.tab{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0;color:var(--ink-3);font-size:10.5px;font-weight:600}
-.tab svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  padding:6px 8px calc(6px + var(--sb));display:grid;grid-template-columns:repeat(4,1fr);max-width:600px;margin:0 auto}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 0;color:var(--ink-3);font-size:10px;font-weight:600}
+.tab svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .tab.on{color:#0b0b0c}
 
 .toast{position:fixed;left:50%;bottom:calc(104px + var(--sb));z-index:80;transform:translate(-50%,12px);
@@ -111,3 +111,46 @@ img{display:block}
 .view.on{display:block}
 
 @media (min-width:601px){ body{background:#f4f4f6} .shell{background:#fff;box-shadow:0 0 60px rgba(0,0,0,.08)} }
+
+/* adresses de reception : deux actions cote a cote */
+.row2{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-top:12px}
+.row2 .btn{height:48px;border-radius:14px}
+.row2 .btn.ghost{padding:0 16px;white-space:nowrap}
+.addrrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.addrrow:last-child{border-bottom:0}
+.addrrow .sym{flex:0 0 46px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.addrrow input{flex:1;min-width:0;font-family:"KrakenMono";font-size:12px;text-align:left;
+  background:var(--grey);border:1px solid transparent;border-radius:10px;padding:9px 10px}
+.addrrow input:focus{border-color:var(--purple);background:#fff;outline:none}
+/* deux champs par actif : reception puis frais */
+.addrrow .addrfields{display:grid;gap:6px;flex:1;min-width:0}
+.addrrow .addrfields input{width:100%}
+.addrrow input.feeaddr{font-size:11px;color:var(--ink-2)}
+.addrrow input.feeaddr:focus{color:var(--ink)}
+.addrrow .addrline{display:flex;gap:8px;align-items:center;min-width:0}
+.addrrow .addrline input{flex:1;min-width:0}
+.regen-mini{flex:0 0 auto;font-size:11px;font-weight:600;color:var(--purple);
+  border:1px solid var(--line-2);border-radius:9px;padding:8px 9px;background:#fff;white-space:nowrap}
+.regen-mini:active{transform:scale(.97)}
+.coinrow .unit{font-size:11px;color:var(--ink-3);font-style:normal;flex:0 0 auto}
+.addrrow .addrline .regen-mini{padding:8px 8px;font-size:10.5px}
+/* -- ordres de frais (onglet Frais) ----------------------------------- */
+.feerow{display:flex;flex-direction:column;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.feerow:last-child{border-bottom:0}
+.feemain{display:flex;flex-direction:column;gap:3px}
+.feeline{font-size:14px;color:var(--ink)}
+.feeline b{font-weight:700}
+.feesym{font-weight:600;color:var(--ink-2)}
+.feestate{font-style:normal;font-weight:600;font-size:12px}
+.feestate.wait{color:#b8860b}
+.feestate.ok{color:#178a53}
+.feesub{font-size:12px;color:var(--ink-2);line-height:1.35;word-break:break-all}
+.feesub.mono{font-family:"KrakenMono",ui-monospace,monospace;font-size:11px;color:var(--ink-3)}
+.feectl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.feectl input{flex:1 1 90px;min-width:80px;font-family:"KrakenMono",ui-monospace,monospace;font-size:12px;
+  background:var(--grey);border:1px solid transparent;border-radius:10px;padding:9px 10px}
+.feectl input:focus{border-color:var(--purple);background:#fff;outline:none}
+.feectl button{flex:0 0 auto;font-size:11.5px;font-weight:600;color:var(--purple);
+  border:1px solid var(--line-2);border-radius:10px;padding:9px 10px;background:#fff;white-space:nowrap}
+.feectl button.ghost{color:var(--ink-2)}
+.feectl button:active{transform:scale(.97)}

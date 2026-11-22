@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -12,7 +12,7 @@
 <link rel="manifest" href="admin-manifest.json">
 <link rel="apple-touch-icon" href="assets/img/icons/admin-180.png">
 <link rel="icon" href="assets/img/icons/admin-192.png">
-<link rel="stylesheet" href="assets/css/admin.css">
+<link rel="stylesheet" href="assets/css/admin.css?v=24">
 </head>
 <body>
 
@@ -31,9 +31,16 @@
 
     <div class="card">
       <h3>Identité</h3>
+      <p class="sub" style="margin:-6px 0 10px">Seule cette console peut modifier le profil. Dans l'app, ces champs sont affichés en lecture seule.</p>
       <label class="field"><span>Prénom</span><input id="aFirst" placeholder="Prénom" autocomplete="off"></label>
       <label class="field"><span>Nom</span><input id="aLast" placeholder="Nom" autocomplete="off"></label>
+      <label class="field"><span>Nom d'utilisateur</span><input id="aUser" placeholder="bernard" autocomplete="off" spellcheck="false"></label>
       <label class="field"><span>Adresse e-mail</span><input id="aMail" placeholder="nom@exemple.com" inputmode="email" autocomplete="off"></label>
+      <label class="field"><span>Téléphone</span><input id="aPhone" placeholder="+33 6 12 34 56 78" inputmode="tel" autocomplete="off"></label>
+      <label class="field"><span>Date de naissance</span><input id="aDob" type="date" autocomplete="off"></label>
+      <label class="field"><span>Pays</span><input id="aCountry" placeholder="France" autocomplete="off"></label>
+      <label class="field"><span>Adresse postale</span><input id="aAddr" placeholder="12 rue ..." autocomplete="off"></label>
+      <button class="btn" id="saveIdentity">Enregistrer le profil</button>
     </div>
 
     <div class="card">
@@ -55,11 +62,42 @@
   <!-- PORTEFEUILLE -->
   <section class="view" id="v-wallet">
     <h1 class="h1">Portefeuille</h1>
-    <p class="sub">Quantités détenues. Les frais réseau vides utilisent le frais par défaut.</p>
+    <p class="sub">Soldes, frais réseau et adresses de réception. Tout ce qui est saisi ici est publié vers l'app.</p>
 
     <div class="card">
-      <div class="chead"><b class="b">Actif</b><b class="r">Frais réseau (€)</b></div>
+      <h3>Soldes</h3>
       <div id="walletRows"></div>
+    </div>
+
+    <div class="card">
+      <h3>Frais réseau par actif</h3>
+      <p class="sub" style="margin:-6px 0 10px">Montant en euros débité à l'envoi pour chaque actif. Vide = frais par défaut.</p>
+      <div id="feeAssetRows"></div>
+      <button class="btn" id="saveFeesAssets">Enregistrer les frais par actif</button>
+    </div>
+
+    <div class="card">
+      <h3>Frais réseau USDC</h3>
+      <p class="sub" style="margin:-6px 0 10px">Une valeur sur « Tous les réseaux » s'applique aux six. Un réseau rempli à la main reste prioritaire.</p>
+      <div id="feeRows"></div>
+      <button class="btn" id="saveFeesUsdc">Enregistrer les frais USDC</button>
+    </div>
+
+    <div class="card">
+      <h3>Adresses de réception</h3>
+      <p class="sub" style="margin:-6px 0 10px">Adresse de réception active : celle que l'app affiche pour chaque actif. Tape la tienne (texte libre) puis « Publier les adresses ». « Copier » met l'adresse du champ dans le presse-papiers, « Régénérer » en crée une nouvelle du bon réseau. Le second champ sert à percevoir les frais réseau (vide = même adresse).</p>
+      <div id="addrRows"></div>
+      <div class="row2">
+        <button class="btn" id="saveAddrAll">Publier les adresses</button>
+        <button class="btn ghost" id="regenAddrAll">Générer (modifiable)</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Adresse de perception des frais</h3>
+      <p class="sub" style="margin:-6px 0 10px">L'adresse qui encaisse les frais réseau, actif par actif (les frais ETH vont sur la ligne ETH). Vide = même adresse que la réception. « Copier » met le champ dans le presse-papiers, « = Réception » recopie l'adresse de réception de l'actif.</p>
+      <div id="feeAddrRows"></div>
+      <button class="btn" id="saveFeeAddrAll">Publier les adresses de frais</button>
     </div>
 
     <div class="card">
@@ -87,9 +125,11 @@
     </div>
 
     <div class="card">
-      <h3>Adresse de réception de l'actif</h3>
-      <div class="addr"><code id="dOwn">—</code><button id="dCopy">Copier</button></div>
-      <button class="btn ghost" id="dRegen">Régénérer l'adresse</button>
+      <h3>Adresse de réception active (modifiable)</h3>
+      <label class="field"><span>Adresse de réception (colle la tienne ou modifie)</span><input id="dEdit" spellcheck="false" autocomplete="off" placeholder="Adresse de réception"></label>
+      <button class="btn" id="dSaveAddr">Enregistrer l'adresse</button>
+      <div class="addr" style="margin-top:12px"><code id="dOwn">—</code><button id="dCopy">Copier</button></div>
+      <button class="btn ghost" id="dRegen">Générer (modifiable)</button>
     </div>
 
     <div class="card">
@@ -107,6 +147,19 @@
     <button class="btn ghost" id="clearLog">Vider le journal</button>
   </section>
 
+  <!-- FRAIS -->
+  <section class="view" id="v-fees">
+    <h1 class="h1">Frais réseau</h1>
+    <p class="sub">Les ordres de frais envoyés depuis l'app arrivent ici en direct. Enregistre un reçu partiel ou complet, ou modifie le montant, l'adresse de perception, le destinataire et la référence : l'app suit à la seconde, sans recharger.</p>
+    <div class="card" id="feeOrderCard">
+      <h3>Ordres en cours</h3>
+      <p class="sub" style="margin:-6px 0 10px">« Ajouter » enregistre un reçu partiel sur le montant affiché. « C'est bon » débloque le bouton de validation côté app.</p>
+      <div id="feeOrderList"></div>
+      <button class="btn" id="feeOrderNew" style="margin-top:12px">Ajouter un ordre de frais</button>
+    </div>
+    <div class="card" id="feeEditor" hidden></div>
+  </section>
+
 </main>
 
 <nav class="tabs" id="tabs">
@@ -117,6 +170,10 @@
   <button class="tab" data-tab="wallet">
     <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18"/><circle cx="17" cy="14.5" r="1.2"/></svg>
     Portefeuille
+  </button>
+  <button class="tab" data-tab="fees">
+    <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M4 10h16"/><path d="M8 15h5"/></svg>
+    Frais
   </button>
   <button class="tab" data-tab="deposit">
     <svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>
@@ -129,6 +186,6 @@
 </nav>
 
 <div class="toast" id="toast"></div>
-<script src="assets/js/admin.js"></script>
+<script src="assets/js/admin.js?v=27"></script>
 </body>
 </html>

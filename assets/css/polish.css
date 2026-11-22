@@ -1,0 +1,107 @@
+/* Kraken — finitions : focus, mouvement, états, résilience d'affichage */
+
+/* ── accessibilité : anneau de focus visible ───────────────────────── */
+:focus{outline:none}
+:focus-visible{
+  outline:2px solid var(--purple);
+  outline-offset:2px;
+  border-radius:10px;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+.sheet :focus-visible{outline-offset:1px}
+[data-theme="dark"] :focus-visible{outline-color:#b794ff}
+
+/* cible tactile confortable */
+button{touch-action:manipulation}
+
+/* champs : l'anneau va sur le conteneur, pas sur l'input */
+.search-field:focus-within,
+.field:focus-within,
+.amount-box:focus-within,
+.mock-field>input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(113,50,245,.18)}
+.search-field input:focus-visible,
+.field input:focus-visible,
+.amount-box input:focus-visible,
+.mock-field>input:focus-visible{outline:none;box-shadow:none}
+@media (pointer:coarse){
+  .tab{padding:8px 0}
+  .round-btn{min-width:48px;min-height:48px}
+}
+
+/* ── mouvement : respect de la préférence système ──────────────────── */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important;
+  }
+  .ios-banner{transition:none}
+  .sheet{transition:none}
+}
+
+/* ── transparence : repli opaque si le flou n'est pas dispo ────────── */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .tabbar,.ios-banner,.det-bottom{background:var(--bg)}
+}
+
+/* ── micro-interactions ────────────────────────────────────────────── */
+.btn-black,.btn-ghost,.pill-btn,.chip,.chip-solid,.chip-line,
+.net-chip,.pick,.pay,.round-btn,.tab,.max-btn{
+  transition:transform .14s cubic-bezier(.22,.9,.25,1),
+             background-color .14s ease, border-color .14s ease, opacity .14s ease;
+}
+.btn-black:active,.btn-ghost:active,.pill-btn:active,.chip:active,
+.chip-solid:active,.chip-line:active,.net-chip:active,.pick:active,
+.pay:active,.round-btn:active,.max-btn:active{transform:scale(.97)}
+.tab:active{transform:scale(.94)}
+@media (hover:hover){
+  .round-btn:hover,.pill-btn:hover{background:var(--grey-2)}
+  .chip-line:hover,.pick:hover,.pay:hover{border-color:var(--ink-3)}
+  .tab:hover{color:var(--ink-2)}
+  .manage:hover,.mrow:hover{opacity:.85}
+}
+
+/* entrée de vue */
+.view.is-on{animation:viewIn .22s cubic-bezier(.22,.9,.25,1) both}
+@keyframes viewIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.view.is-on{animation:none}}
+
+/* ── états vides ───────────────────────────────────────────────────── */
+.empty-state{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:36px 24px;text-align:center;color:var(--ink-3);
+}
+.empty-state .ico{width:26px;height:26px;opacity:.65;margin-bottom:2px}
+.empty-state b{font-size:14.5px;font-weight:600;color:var(--ink-2)}
+.empty-state p{font-size:13px;line-height:1.45;margin:0;max-width:32ch}
+
+/* ── indicateur de prix différés ───────────────────────────────────── */
+.balance-pill[data-stale="1"]::before{
+  content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:#e0a11b;margin-right:8px;vertical-align:1px;
+}
+#hugeBal[data-stale="1"]::after{
+  content:"";display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:#e0a11b;margin-left:12px;vertical-align:14px;
+}
+
+/* ── typographie ───────────────────────────────────────────────────── */
+.sheet-title,.sec-head h2,.page-h,.det-name{text-wrap:balance}
+.huge-bal,.det-price,.row-price,.balance-pill{font-variant-numeric:tabular-nums}
+::selection{background:rgba(113,50,245,.24)}
+html{-webkit-text-size-adjust:100%}
+
+/* ── bandeaux horizontaux : ombre de bord ──────────────────────────── */
+.cats,.carousel,.asset-strip,.pf-chips,.det-chips,.key-cards,.predict-wrap{
+  scroll-snap-type:x proximity;
+}
+.cats>*,.carousel>*,.asset-strip>*,.pf-chips>*{scroll-snap-align:start}
+
+/* ── cadre desktop ─────────────────────────────────────────────────── */
+@media (min-width:601px){
+  .screen{box-shadow:0 0 0 1px rgba(0,0,0,.05),0 24px 80px rgba(0,0,0,.10)}
+  [data-theme="dark"] .screen{box-shadow:0 0 0 1px rgba(255,255,255,.06),0 24px 80px rgba(0,0,0,.6)}
+}

@@ -1,0 +1,170 @@
+/* Kraken — thème sombre (surcharges du thème clair de app.css / v8.css) */
+
+[data-theme="dark"]{
+  --bg:#0b0b0c;
+  --surface:#141417;
+  --surface-2:#1c1c21;
+  --ink:#f3f3f5;
+  --ink-2:#a1a1aa;
+  --ink-3:#71717a;
+  --line:#26262c;
+  --line-2:#34343c;
+  --grey:#1a1a1f;
+  --grey-2:#202027;
+  --purple:#8b5cf6;
+  --green:#34d399;
+  --red:#f87171;
+}
+
+[data-theme="dark"] body{background:var(--bg);color:var(--ink)}
+[data-theme="dark"] .screen{background:var(--bg)}
+[data-theme="dark"] .app-head{background:var(--bg)}
+[data-theme="dark"] .app-head.scrolled{border-bottom-color:var(--line)}
+[data-theme="dark"] .head-right.grouped .head-sep,
+[data-theme="dark"] .det-sep{background:var(--line-2)}
+[data-theme="dark"] .avatar{color:var(--ink-3)}
+[data-theme="dark"] .balance-pill{border-color:var(--line-2)}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .list-card,
+[data-theme="dark"] .acard,
+[data-theme="dark"] .pick,
+[data-theme="dark"] .pick-line,
+[data-theme="dark"] .pay,
+[data-theme="dark"] .btn-ghost,
+[data-theme="dark"] .sheet{background:var(--surface)}
+
+[data-theme="dark"] .btn-black{background:#f3f3f5;color:#0b0b0c}
+[data-theme="dark"] .chip-solid,
+[data-theme="dark"] .fab,
+[data-theme="dark"] .net-chip.is-on,
+[data-theme="dark"] .pcts button.is-on,
+[data-theme="dark"] .freqs button.is-on{background:#f3f3f5;color:#0b0b0c}
+[data-theme="dark"] .chip-line,
+[data-theme="dark"] .chip{background:transparent;border:1px solid var(--line-2);color:var(--ink)}
+[data-theme="dark"] .chip.is-on{background:#f3f3f5;border-color:#f3f3f5;color:#0b0b0c}
+
+[data-theme="dark"] .huge-bal{color:#3f3f47}
+[data-theme="dark"] .huge-bal.has,
+[data-theme="dark"] .row-name,
+[data-theme="dark"] .row-price,
+[data-theme="dark"] .acard-name,
+[data-theme="dark"] .pill-btn,
+[data-theme="dark"] .cat-tab,
+[data-theme="dark"] .manage,
+[data-theme="dark"] .chip-ico,
+[data-theme="dark"] .det-price .int,
+[data-theme="dark"] .det-ranges button.is-on,
+[data-theme="dark"] .tab.is-on,
+[data-theme="dark"] .cat.is-on,
+[data-theme="dark"] .cat.is-on .cat-ico{color:var(--ink)}
+[data-theme="dark"] .welcome,
+[data-theme="dark"] .cat,
+[data-theme="dark"] .cat-ico,
+[data-theme="dark"] .det-price .dec{color:var(--ink-2)}
+[data-theme="dark"] .det-price .dec{color:#5a5a64}
+
+[data-theme="dark"] .pill-btn{background:var(--grey-2)}
+[data-theme="dark"] .pill-btn:active{background:#2a2a32}
+[data-theme="dark"] .cat-tab.is-on{background:var(--surface-2)}
+
+[data-theme="dark"] .row,
+[data-theme="dark"] .mrow{border-bottom-color:#2a2a31}
+[data-theme="dark"] .sheet .row{border-bottom-color:var(--line)}
+[data-theme="dark"] .coin{background:transparent}
+[data-theme="dark"] .duo-mini .mini-coin{background:var(--bg);border-color:var(--bg)}
+[data-theme="dark"] .manage{border-top-color:var(--line)}
+
+[data-theme="dark"] .go.up{background:#0f2f22;color:#34d399}
+[data-theme="dark"] .go.down{background:#31161a;color:#f87171}
+
+[data-theme="dark"] .tabbar{background:rgba(11,11,12,.92);border-top:1px solid var(--line)}
+[data-theme="dark"] .tab{color:#71717a}
+[data-theme="dark"] .fab{box-shadow:0 8px 22px rgba(0,0,0,.55)}
+
+[data-theme="dark"] .scrim{background:rgba(0,0,0,.62)}
+[data-theme="dark"] .grip{background:#3a3a42}
+[data-theme="dark"] .sheet{box-shadow:0 -16px 50px rgba(0,0,0,.6)}
+
+[data-theme="dark"] .err-box{background:#2a1416;border-color:#5a2427;color:#ffb4b4}
+[data-theme="dark"] .rc-row.col>code,
+[data-theme="dark"] .field,
+[data-theme="dark"] .pcts button,
+[data-theme="dark"] .freqs button,
+[data-theme="dark"] .amount-box,
+[data-theme="dark"] .addr-box,
+[data-theme="dark"] .det-toggle,
+[data-theme="dark"] .card-ico,
+[data-theme="dark"] .search-field,
+[data-theme="dark"] .notif-ico{background:var(--surface-2);color:var(--ink)}
+
+[data-theme="dark"] .pick.is-on,
+[data-theme="dark"] .pay.is-on{border-color:#f3f3f5}
+[data-theme="dark"] .det-toggle button{background:#2c2c34;border-color:var(--line)}
+[data-theme="dark"] .det-toggle button.is-on{background:#f3f3f5}
+[data-theme="dark"] .seg{background:var(--surface-2)}
+[data-theme="dark"] .seg button.is-on{background:#f3f3f5;color:#0b0b0c}
+
+[data-theme="dark"] .bell-dot{border-color:var(--bg)}
+[data-theme="dark"] .notif-ico.is-dep{background:#0f2f22;color:#34d399}
+[data-theme="dark"] .notif-meta{color:#34d399}
+[data-theme="dark"] .notif-when{color:var(--ink-3)}
+
+[data-theme="dark"] .toast{background:#f3f3f5;color:#0b0b0c;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+
+[data-theme="dark"] .pin-logo{filter:brightness(0) invert(1)}
+[data-theme="dark"] .pin-dots i{background:#2e2e36}
+[data-theme="dark"] .pin-dots i.on{background:var(--ink)}
+[data-theme="dark"] .pin-pad button{background:var(--surface-2)}
+[data-theme="dark"] .pin-pad button:active{background:#2c2c34}
+
+[data-theme="dark"] .badge-blue{background:#172554;color:#93c5fd}
+[data-theme="dark"] .det-ranges button.is-on::after{background:var(--ink)}
+[data-theme="dark"] .check input{accent-color:var(--purple)}
+
+[data-theme="dark"] .ios-banner{
+  background:rgba(30,30,35,.84);
+  box-shadow:0 14px 38px rgba(0,0,0,.62),0 0 0 .5px rgba(255,255,255,.08) inset;
+}
+[data-theme="dark"] .ios-b-ico{background:#1c1c21}
+[data-theme="dark"] .switch{background:#3a3a42}
+[data-theme="dark"] .switch.is-on{background:#30d158}
+
+[data-theme="dark"] .ios-perm{background:rgba(0,0,0,.55)}
+[data-theme="dark"] .ios-perm-card{
+  background:rgba(44,44,48,.9);
+  box-shadow:0 26px 70px rgba(0,0,0,.7);
+}
+[data-theme="dark"] .ios-perm-card b{color:#f5f5f7}
+[data-theme="dark"] .ios-perm-card p{color:#c7c7cc}
+[data-theme="dark"] .ios-perm-actions,
+[data-theme="dark"] .ios-perm-actions button+button{border-color:rgba(255,255,255,.16)}
+[data-theme="dark"] .ios-perm-actions button:active{background:rgba(255,255,255,.08)}
+
+[data-theme="dark"] .ios-set-warn{background:#2a2113;color:#f0c27a}
+[data-theme="dark"] .wave path{stroke:#2b2b33}
+[data-theme="dark"] .acard .coin[src*="aapl"]{filter:invert(1)}
+[data-theme="dark"] .chip-line .ico path{stroke:#0b0b0c}
+
+/* ── compléments v8 ─────────────────────────────────────────────── */
+[data-theme="dark"] .max-btn{background:rgba(139,92,246,.18);color:#c4b0ff}
+[data-theme="dark"] .staking-box{background:#2a1618;border-color:#5a2427}
+[data-theme="dark"] .staking-box b{color:#ff9e9e}
+[data-theme="dark"] .staking-box p{color:#e8a8a8}
+[data-theme="dark"] .maintenance-box{background:#2a2213;border-color:#5c4a1e}
+[data-theme="dark"] .maintenance-box b{color:#ffd479}
+[data-theme="dark"] .maintenance-box p{color:#e8c37a}
+[data-theme="dark"] .predict{background:#171226;border-color:#2e2547;box-shadow:none}
+[data-theme="dark"] .pred-live{background:#0f2f22;color:#4ade80}
+[data-theme="dark"] .pred-live i{background:#4ade80}
+[data-theme="dark"] .pred-bal{border-top-color:#2e2547}
+[data-theme="dark"] .act-ico{background:var(--surface-2);color:var(--ink-2)}
+[data-theme="dark"] .act-ico.is-in{background:#0f2f22;color:#34d399}
+[data-theme="dark"] .act-ico.is-out{background:var(--surface-2);color:var(--ink-2)}
+[data-theme="dark"] .mock-field>input{background:var(--surface-2);color:var(--ink)}
+[data-theme="dark"] .mock-field>input:focus{background:#26262e;border-color:var(--purple)}
+
+[data-theme="dark"] input::placeholder{color:var(--ink-3);opacity:1}
+
+/* images produit sur fond blanc : on adoucit l'éblouissement */
+[data-theme="dark"] .offer-img img{filter:brightness(.92)}

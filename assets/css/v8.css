@@ -1,0 +1,254 @@
+/* Kraken — compléments v8 : bannières iOS, réseaux USDC, activité, prévisions */
+
+/* ── bannières de notification iOS empilées ─────────────────── */
+.ios-stack{
+  position:fixed;top:calc(8px + var(--st));left:10px;right:10px;z-index:200;
+  display:flex;flex-direction:column;gap:8px;pointer-events:none;
+}
+.ios-banner{
+  position:relative;top:auto;left:auto;right:auto;
+  display:flex;gap:12px;align-items:flex-start;
+  padding:12px 14px;border-radius:24px;
+  background:rgba(250,250,252,.84);
+  -webkit-backdrop-filter:blur(30px) saturate(180%);
+  backdrop-filter:blur(30px) saturate(180%);
+  box-shadow:0 14px 38px rgba(0,0,0,.18),0 0 0 .5px rgba(255,255,255,.55) inset;
+  transform:translateY(calc(-100% - 24px)) scale(.98);
+  opacity:0;
+  transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s ease;
+  pointer-events:none;touch-action:pan-y;will-change:transform,opacity;
+}
+.ios-banner.on{transform:none;opacity:1;pointer-events:auto}
+.ios-banner.off{transform:translateY(-18px) scale(.97);opacity:0;pointer-events:none}
+.ios-banner.is-grabbing{transition:none}
+.ios-banner:not(:first-child){
+  margin:0 7px;
+  box-shadow:0 8px 24px rgba(0,0,0,.14),0 0 0 .5px rgba(255,255,255,.45) inset;
+}
+.ios-b-ico{width:38px;height:38px;border-radius:10px;overflow:hidden;flex:0 0 auto;background:var(--purple)}
+.ios-b-ico img{width:100%;height:100%;object-fit:cover;display:block}
+.ios-b-main{flex:1;min-width:0}
+.ios-b-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:1px}
+.ios-b-head b{font-size:12px;font-weight:600;letter-spacing:.1px;color:var(--ink-3)}
+.ios-b-head span{font-size:11.5px;color:var(--ink-3);flex:0 0 auto}
+.ios-b-title{font-size:14.5px;font-weight:600;line-height:1.25;color:var(--ink)}
+.ios-b-text{font-size:13.5px;line-height:1.3;color:var(--ink-2);margin-top:1px;overflow-wrap:anywhere}
+
+/* ── interrupteur notifications système ─────────────────────── */
+.sysnotif{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 14px;margin:2px 0 16px;
+  border:1px solid var(--line);border-radius:16px;background:var(--bg);
+}
+.sysnotif-main{flex:1;min-width:0}
+.sysnotif-main b{display:block;font-size:14.5px;font-weight:600;color:var(--ink)}
+.sysnotif-main span{display:block;font-size:12.5px;line-height:1.35;color:var(--ink-3);margin-top:2px}
+.switch{
+  flex:0 0 auto;width:50px;height:30px;padding:3px;border:0;border-radius:999px;
+  background:#d6d6dc;cursor:pointer;transition:background-color .2s ease;
+}
+.switch i{
+  display:block;width:24px;height:24px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 3px rgba(0,0,0,.28);
+  transition:transform .22s cubic-bezier(.22,1,.36,1);
+}
+.switch.is-on{background:#34c759}
+.switch.is-on i{transform:translateX(20px)}
+.switch:active{opacity:.85}
+
+/* ── libellés et puces de réseau ────────────────────────────── */
+.sheet-label{font-size:12.5px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.5px;margin:2px 0 8px}
+.net-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.net-chip{padding:8px 14px;border-radius:999px;background:var(--grey);font-size:13px;font-weight:500;color:var(--ink-2);white-space:nowrap}
+.net-chip.is-on{background:#0b0b0c;color:#fff}
+
+/* ── bouton MAX ─────────────────────────────────────────────── */
+.amount-box{position:relative}
+.max-btn{flex:0 0 auto;font-size:12px;font-weight:700;letter-spacing:.3px;color:var(--purple);background:#ede8fe;border-radius:8px;padding:5px 9px}
+.max-btn:active{opacity:.7}
+
+/* ── encart staking / indisponible ──────────────────────────── */
+.staking-box{background:#fff5f5;border:1px solid #f8d4d5;border-radius:16px;padding:14px 16px;margin:0 0 14px}
+.staking-box b{display:block;font-size:15px;font-weight:600;color:#b42318;margin-bottom:5px}
+.staking-box p{font-size:13.5px;line-height:1.45;color:#912018;margin:0;overflow-wrap:anywhere}
+
+/* ── prévisions : carte mise en avant ───────────────────────── */
+.predict{background:#faf8ff;border-color:#e4d9ff;box-shadow:0 6px 22px rgba(113,50,245,.07)}
+.predict-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.pred-live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:#0a8a4e;background:#e8f7ee;border-radius:999px;padding:5px 10px}
+.pred-live i{width:7px;height:7px;border-radius:50%;background:#0a8a4e;animation:predPulse 1.8s ease-in-out infinite}
+@keyframes predPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.82)}}
+.pred-timer{font-size:12px;color:var(--ink-3)}
+.pred-bal{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid #e9e1ff;font-size:14px;color:var(--ink-2)}
+.pred-bal b{font-size:17px;font-weight:600;color:var(--purple);font-variant-numeric:tabular-nums}
+.pred-bal[hidden]{display:none}
+
+/* ── activité / historique ──────────────────────────────────── */
+.activity-list{display:flex;flex-direction:column}
+.act-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);min-width:0}
+.act-row:last-child{border-bottom:0}
+.act-ico{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;background:#f2f2f4;color:var(--ink-2)}
+.act-ico.is-in{background:#e8f7ee;color:#0b7d3f}
+.act-ico.is-out{background:#f4f4f6;color:#5b5b64}
+.act-ico .ico{width:17px;height:17px;stroke-width:2}
+.act-main{flex:1;min-width:0}
+.act-title{font-size:14.5px;font-weight:500;line-height:1.25}
+.act-sub{font-size:12.5px;color:var(--ink-3);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.act-val{text-align:right;flex:0 0 auto;max-width:47%}
+.act-amt{font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.act-amt.up{color:var(--green)}
+.act-cur{font-size:11px;color:var(--ink-3);margin-top:2px;white-space:nowrap}
+
+/* ── garde-fous de débordement ──────────────────────────────── */
+.sheet-title,.sheet-sub,.pick-main b,.pick-main i,.row-name,.row-sub,
+.fiat-head h3,.page-h,.approx,.sheet-note,.rc-row>b,.rc-row>span{overflow-wrap:anywhere}
+.row-name,.row-sub,.pick-main b,.pick-main i,.act-title,.act-sub{overflow-wrap:anywhere;word-break:break-word}
+.review .rc-row code,.recap .rc-row code{overflow-wrap:anywhere}
+.sheet-body{padding-bottom:calc(24px + var(--sb))}
+
+.demo-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  color:#7a30d8;background:#f0e8ff;border:1px solid #ddd0ff;
+  border-radius:999px;padding:3px 9px;line-height:1.1;flex:0 0 auto;
+}
+.splash-demo{position:absolute;top:calc(18px + var(--st));left:50%;transform:translateX(-50%);z-index:3}
+.head-demo{margin-left:2px}
+.splash-note{
+  position:absolute;left:24px;right:24px;bottom:calc(28px + var(--sb));
+  text-align:center;font-size:11.5px;line-height:1.4;color:var(--ink-3);margin:0;
+}
+.demo-ribbon{
+  margin:6px 14px 0;padding:7px 12px;border-radius:12px;
+  font-size:11.5px;font-weight:500;line-height:1.3;text-align:center;
+  color:#7a30d8;background:#f6f1ff;border:1px solid #e6dcff;
+  overflow-wrap:anywhere;
+}
+.demo-note{
+  margin:0 0 14px;padding:10px 13px;border-radius:12px;
+  font-size:12.5px;line-height:1.4;color:#7a30d8;
+  background:#f6f1ff;border:1px solid #e6dcff;overflow-wrap:anywhere;
+}
+.pay.is-off{opacity:.6}
+.demo-box{background:#f6f1ff;border:1px solid #e6dcff;border-radius:16px;padding:14px 16px;margin:0 0 14px}
+.demo-box b{display:block;font-size:15px;font-weight:600;color:#7a30d8;margin-bottom:5px}
+.demo-box p{font-size:13.5px;line-height:1.45;color:#5a3f8a;margin:0;overflow-wrap:anywhere}
+
+/* ── état maintenance ───────────────────────────────────────── */
+.maintenance-box{background:#fff8ec;border:1px solid #f5dfae;border-radius:16px;padding:14px 16px;margin:0 0 14px}
+.maintenance-box b{display:block;font-size:15px;font-weight:600;color:#8a5a00;margin-bottom:5px}
+.maintenance-box p{font-size:13.5px;line-height:1.45;color:#7a5200;margin:0;overflow-wrap:anywhere}
+
+/* ── panneau maquette ───────────────────────────────────────── */
+.mock-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
+.mock-grid--full{grid-template-columns:1fr}
+.mock-field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.mock-field>span{font-size:11.5px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--ink-3);overflow-wrap:anywhere}
+.mock-field>input{font-size:14px;padding:10px 12px;border-radius:10px;background:var(--grey);border:1px solid transparent;min-width:0;width:100%}
+.mock-field>input:focus{border-color:var(--purple);background:#fff;outline:none}
+@media (max-width:360px){.mock-grid{grid-template-columns:1fr}}
+
+/* ── garde-fous de débordement (suite) ──────────────────────── */
+.huge-bal,.offer-title,.offer-sub,.pill-btn,.chip-solid,.net-chip,
+.addr-box code,.pick-main b,.pick-main i{overflow-wrap:anywhere;word-break:break-word}
+.offer-title,.offer-sub{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.pill-btn,.chip-solid{white-space:nowrap;max-width:100%}
+.net-chip{max-width:100%}
+.net-chip{display:inline-flex;align-items:center;gap:6px}
+.net-mark{width:15px;height:15px;flex:0 0 auto;display:block}
+.net-chip.is-on .net-mark{filter:none}
+.addr-box code{display:block;word-break:break-all}
+
+/* ── alerte d'autorisation façon iOS ────────────────────────── */
+.avatar{position:relative}
+.avatar-dot{
+  position:absolute;top:-1px;right:-1px;width:10px;height:10px;border-radius:50%;
+  background:#e0342b;border:2px solid var(--bg);box-sizing:content-box;
+}
+.ios-perm{
+  position:fixed;inset:0;z-index:420;display:grid;place-items:center;padding:32px 24px;
+  background:rgba(0,0,0,.32);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+}
+.ios-perm[hidden]{display:none}
+.ios-perm-card{
+  width:min(300px,100%);padding:20px 0 0;border-radius:16px;text-align:center;
+  background:rgba(250,250,252,.88);
+  -webkit-backdrop-filter:blur(32px) saturate(180%);backdrop-filter:blur(32px) saturate(180%);
+  box-shadow:0 26px 70px rgba(0,0,0,.32);
+  animation:permIn .26s cubic-bezier(.2,.9,.25,1);
+}
+@keyframes permIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+.ios-perm-ico img{width:56px;height:56px;border-radius:13px;display:block;margin:0 auto}
+.ios-perm-card b{display:block;margin:14px 20px 5px;font-size:15.5px;font-weight:600;line-height:1.3;letter-spacing:-.1px}
+.ios-perm-card p{margin:0 20px 18px;font-size:12.5px;line-height:1.38;color:#3c3c43}
+.ios-perm-actions{display:grid;grid-template-columns:1fr 1fr;border-top:.5px solid rgba(60,60,67,.28)}
+.ios-perm-actions button{
+  height:45px;border:0;background:transparent;color:#0a84ff;
+  font-family:inherit;font-size:16.5px;font-weight:400;
+}
+.ios-perm-actions button+button{border-left:.5px solid rgba(60,60,67,.28);font-weight:600}
+.ios-perm-actions button:active{background:rgba(0,0,0,.06)}
+
+/* ── réglages de notifications façon iOS ────────────────────── */
+.ios-set-head{display:flex;align-items:center;gap:13px;padding:6px 0 18px}
+.ios-set-head img{width:52px;height:52px;border-radius:12px}
+.ios-set-head b{display:block;font-size:19px;font-weight:600;letter-spacing:-.2px}
+.ios-set-head span{display:block;font-size:13px;color:var(--ink-3);margin-top:1px}
+.ios-set-group{border-radius:14px;background:var(--grey);overflow:hidden;margin-bottom:16px}
+.ios-set-row{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 14px;border-bottom:.5px solid var(--line-2)}
+.ios-set-row:last-child{border-bottom:0}
+.ios-set-row>span{flex:1;font-size:15px;line-height:1.25}
+.ios-set-row em{font-style:normal;font-size:14px;color:var(--ink-3)}
+.ios-set-row .switch{width:46px;height:28px}
+.ios-set-row .switch i{width:22px;height:22px}
+.ios-set-row .switch.is-on i{transform:translateX(18px)}
+.ios-set-preview{
+  width:100%;height:46px;border:0;border-radius:14px;
+  background:var(--purple);color:#fff;font-family:inherit;font-size:15px;font-weight:600;
+}
+.ios-set-note{font-size:12px;line-height:1.45;color:var(--ink-3);margin:10px 2px 0}
+.ios-set-warn{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:12px 14px;border-radius:14px;margin-bottom:16px;
+  background:#fff4e5;color:#7a4b00;font-size:12.5px;line-height:1.4;
+}
+
+/* ── compte (Boîte de réception) ─────────────────────────────── */
+.sysnotif-link{width:100%;font-family:inherit;text-align:left;color:inherit;cursor:pointer}
+.sysnotif-link .chev{width:18px;height:18px;color:var(--ink-3);flex:0 0 auto}
+.acct-card{
+  display:flex;flex-direction:column;align-items:center;
+  padding:22px 18px;border-radius:20px;border:1px solid var(--line);
+  margin-bottom:14px;
+}
+.acct-av{
+  width:86px;height:86px;border-radius:50%;background:var(--grey);
+  display:grid;place-items:center;
+  font-family:"KrakenBrand";font-size:40px;color:var(--ink-3);
+}
+.acct-name{font-family:"KrakenBrand";font-size:22px;margin-top:12px;letter-spacing:-.2px}
+.acct-mail{font-size:13.5px;color:var(--ink-3);margin-top:2px}
+.acct-card .btn-ghost{margin-top:14px;height:40px;border-radius:20px;padding:0 16px;font-size:14px;width:auto}
+.acct-inbox{
+  display:flex;align-items:center;gap:13px;width:100%;padding:14px;
+  border:1px solid var(--line);border-radius:18px;
+  text-align:left;font-family:inherit;color:inherit;background:transparent;
+  margin-bottom:18px;cursor:pointer;
+}
+.acct-ico{width:34px;height:34px;flex:0 0 auto;display:grid;place-items:center;position:relative;color:var(--ink)}
+.acct-ico .ico{width:22px;height:22px}
+.acct-main{flex:1;min-width:0}
+.acct-main b{display:block;font-size:15px;font-weight:600;line-height:1.25}
+.acct-main i{display:block;font-style:normal;font-size:12.5px;color:var(--ink-2);line-height:1.35;margin-top:1px}
+.acct-sect{font-family:"KrakenBrand";font-size:18px;margin:6px 0 8px}
+.acct-row{
+  display:flex;align-items:center;gap:13px;width:100%;padding:12px 2px;
+  border:0;border-bottom:1px solid var(--line);background:transparent;
+  font-family:inherit;text-align:left;color:inherit;cursor:pointer;
+}
+.acct-row:last-child{border-bottom:0}
+.acct-row .chev{width:16px;height:16px;color:var(--ink-3);flex:0 0 auto}
+.acct-badge{font-size:12px;color:var(--ink-3);border:1px solid var(--line-2);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.acct-dot{position:absolute;top:1px;right:1px;width:8px;height:8px;border-radius:50%;background:#e02d2d;border:1.5px solid var(--bg)}
+
